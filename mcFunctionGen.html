@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="mcFunctionGen.css">
+    <script src="mcFunctionGen.js" defer></script>
+    <title>Minecraft Function Generator</title>
+</head>
+<body onload="initValues()">
+When entering parameters for the size of the room, all values define the airspace inside the room. So, for a 3 x 3 x 3
+room around a player standing at x: 35, y: 22, z: 27, you would enter those exact coordinates for x, y, and z. And 3 for
+length, height, and width. Adding a shell around this would impact a 5 x 5 x 5 space.
+<br><br>
+<div class="container">
+<form name="formBoxRoom">
+    <label for="centerX">Center X: </label>
+    <input type="number" name="centerX" id="centerX" value="0"><br>
+    <label for="floorY">Foot-level Y: </label>
+    <input type="number" name="floorY" id="floorY" value="10"><br>
+    <label for="centerZ">Center Z: </label>
+    <input type="number" name="centerZ" id="centerZ" value="0"><br>
+    <label for="lengthX">Length on X axis: </label>
+    <input type="number" name="lengthX" id="lengthX" value="95"><br>
+    <label for="heightY">Height Y: </label>
+    <input type="number" name="heightY" id="heightY" value="5"><br>
+    <label for="widthZ">Length on Z Axis: </label>
+    <input type="number" name="widthZ" id="widthZ" value="95"><br>
+    <br>
+
+    <label for="hardCrunchyShell">Hard crunchy shell? </label>
+    <input type="checkbox" id="hardCrunchyShell" onchange="updateShell()" checked>
+
+    <label for="shellType">Shell Type: </label>
+    <select id="shellType" onchange="updateWallType()">
+        <option>-</option>
+        <option selected="selected">minecraft:stone</option>
+        <option>minecraft:glass</option>
+        <option>Natural</option>
+        <option>Custom</option>
+    </select>
+
+    <label for="wallType">Room wall type: </label>
+    <input type="text" name="wallType" id="wallType" value="minecraft:stone" onchange="updateUI()"><br>
+
+    <br>
+    <label for="preserveMinerals">Preserve minerals: </label>
+    <input type="checkbox" onchange="updateUI()" id="preserveMinerals" name="preserveMinerals">
+
+    <br><br>
+    <label for="boxRoomOutput">Function Text: </label>
+    <textarea rows="5" cols="120" name="boxRoomOutput" id="boxRoomOutput">Your minecraft code will go here...</textarea>
+    <br>
+    <input type="button" onclick="boxRoom()" value="Generate Code">
+
+</form>
+</div>
+
+</body>
+</html>
