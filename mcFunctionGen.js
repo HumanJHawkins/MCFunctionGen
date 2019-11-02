@@ -8,7 +8,13 @@ let minX, maxX;
 let minY, maxY;
 let minZ, maxZ;
 
-let boxRoomOutput = "";
+// Directions to match minecraft
+let south = 0;
+let west = 1;
+let north = 2;
+let east = 3;
+
+let codeOutput = "";
 
 function initValues() {
     wallType = document.getElementById("wallType").value;
@@ -22,14 +28,74 @@ function initValues() {
     heightY = parseInt(document.getElementById("heightY").value);
     widthZ = parseInt(document.getElementById("widthZ").value);
 
-    boxRoomOutput = "";
+    codeOutput = "";
+}
+// fill -48 9 -48 48 9 48 minecraft:stone
+
+function dwarvenStairs() {
+    initValues();
+
+    for(let i = centerX - 4; i<=41; i+=8) {
+        codeOutput += singleDwarvenStair(i, floorY + 4, centerZ - 4, north);
+    }
+
+    for(let i = centerX; i<=37; i+=8) {
+        codeOutput += singleDwarvenStair(i, floorY, centerZ, north);
+    }
+
+    for(let i = centerX + 4; i<=33; i+=8) {
+        codeOutput += singleDwarvenStair(i, floorY -4, centerZ + 4, north);
+    }
+
+    document.getElementById("codeOutput").value = codeOutput;
+}
+
+function singleDwarvenStair(x, y, z, direction) {
+
+    code  = 'fill ' + x + ' ' + y + ' ' + z + ' ' + (x+6) + ' ' + y + ' ' + z + ' minecraft:air replace minecraft:stone_bricks\n';
+    code += 'fill ' + (x+1) + ' ' + (y-1) + ' ' + z + ' ' + (x+5) + ' ' + (y-1) + ' ' + z + ' minecraft:air replace minecraft:stone_bricks\n';
+    code += 'fill ' + (x+2) + ' ' + (y-2) + ' ' + z + ' ' + (x+4) + ' ' + (y-2) + ' ' + z + ' minecraft:air replace minecraft:stone_bricks\n';
+    code += 'fill ' + (x+1) + ' ' + y + ' ' + (z-1) + ' ' + (x+5) + ' ' + y + ' ' + (z-1) + ' minecraft:air replace minecraft:stone_bricks\n';
+    code += 'fill ' + (x+2) + ' ' + y + ' ' + (z-2) + ' ' + (x+4) + ' ' + y + ' ' + (z-2) + ' minecraft:air replace minecraft:stone_bricks\n';
+    code += 'fill ' + (x+2) + ' ' + (y-1) + ' ' + (z-1) + ' ' + (x+4) + ' ' + (y-1) + ' ' + (z-1) + ' minecraft:air replace minecraft:stone_bricks\n';
+
+    code += 'setblock ' + (x) + ' ' + (y+1) + ' ' + (z) + ' minecraft:torch keep\n';
+    code += 'setblock ' + (x-4) + ' ' + (y-1) + ' ' + (z+1) + ' minecraft:torch[facing=south] keep\n';
+
+    code += 'setblock ' + (x) + ' ' + (y) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=west] keep\n';
+    code += 'setblock ' + (x+1) + ' ' + (y-1) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=west] keep\n';
+    code += 'setblock ' + (x+1) + ' ' + (y) + ' ' + (z-1) + ' minecraft:stone_brick_stairs[facing=west] keep\n';
+    code += 'setblock ' + (x+1) + ' ' + (y-3) + ' ' + (z+1) + ' minecraft:stone_brick_stairs[facing=east] keep\n';
+
+    code += 'setblock ' + (x+6) + ' ' + (y) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=east] keep\n';
+    code += 'setblock ' + (x+5) + ' ' + (y-1) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=east] keep\n';
+    code += 'setblock ' + (x+5) + ' ' + (y) + ' ' + (z-1) + ' minecraft:stone_brick_stairs[facing=east] keep\n';
+    code += 'setblock ' + (x+5) + ' ' + (y-3) + ' ' + (z+1) + ' minecraft:stone_brick_stairs[facing=west] keep\n';
+
+    code += 'setblock ' + (x+2) + ' ' + (y-3) + ' ' + (z+1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+3) + ' ' + (y-3) + ' ' + (z+1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+4) + ' ' + (y-3) + ' ' + (z+1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+
+    code += 'setblock ' + (x+2) + ' ' + (y-2) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+3) + ' ' + (y-2) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+4) + ' ' + (y-2) + ' ' + (z) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+
+    code += 'setblock ' + (x+2) + ' ' + (y-1) + ' ' + (z-1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+3) + ' ' + (y-1) + ' ' + (z-1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+4) + ' ' + (y-1) + ' ' + (z-1) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+
+    code += 'setblock ' + (x+2) + ' ' + (y) + ' ' + (z-2) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+3) + ' ' + (y) + ' ' + (z-2) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+    code += 'setblock ' + (x+4) + ' ' + (y) + ' ' + (z-2) + ' minecraft:stone_brick_stairs[facing=north] keep\n';
+
+    return code;
 }
 
 function boxRoom() {
     initValues();
 
     if ((lengthX * widthZ) > 32767) {
-        boxRoomOutput = "Length times width must be less than 32767. Please adjust values and try again.";
+        codeOutput = "Length times width must be less than 32767. Please adjust values and try again.";
     } else {
         // Because width/2 is stored as a double, Math.ceil produces unexpected results. So handle even widths manually.
         if (lengthX % 2 == 1) {
@@ -52,50 +118,50 @@ function boxRoom() {
         }
 
         if (wallType === "Clean") {
-            boxRoomOutput = boxRoomOutput + "# Generating complete / clean walls.\n";
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial);
+            codeOutput = codeOutput + "# Generating complete / clean walls.\n";
+            codeOutput = codeOutput + getRoomWalls(wallMaterial);
         } else if (wallType === "Preserve Minerals") {
-            boxRoomOutput = boxRoomOutput + "# Generating walls, leaving most minerals intact. Unfortunately flowing \n" +
+            codeOutput = codeOutput + "# Generating walls, leaving most minerals intact. Unfortunately flowing \n" +
                 "# water does not replace well, so this may produce walls with holes.\n";
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:water");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:dirt");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:gravel");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:sand");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:water");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:dirt");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:gravel");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:sand");
         } else if (wallType === "Preserve and Seal") {
-            boxRoomOutput = boxRoomOutput + "# Generating walls, leaving most minerals intact. Attempting to also \n" +
+            codeOutput = codeOutput + "# Generating walls, leaving most minerals intact. Attempting to also \n" +
                 "# seal holes and lava or water flows. This does not work well. Run the \n" +
                 "# function multiple times quickly for best results.\n";
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:water");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:dirt");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:gravel");
-            boxRoomOutput = boxRoomOutput + getRoomWalls(wallMaterial + " replace minecraft:sand");
-            boxRoomOutput = boxRoomOutput + getRoomWalls("minecraft:glass replace minecraft:air");
-            boxRoomOutput = boxRoomOutput + getRoomWalls("minecraft:glass replace minecraft:water");
-            boxRoomOutput = boxRoomOutput + getRoomWalls("minecraft:obsidian replace minecraft:lava");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:water");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:dirt");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:gravel");
+            codeOutput = codeOutput + getRoomWalls(wallMaterial + " replace minecraft:sand");
+            codeOutput = codeOutput + getRoomWalls("minecraft:glass replace minecraft:air");
+            codeOutput = codeOutput + getRoomWalls("minecraft:glass replace minecraft:water");
+            codeOutput = codeOutput + getRoomWalls("minecraft:obsidian replace minecraft:lava");
         }
 
-        boxRoomOutput = boxRoomOutput + "\n";
+        codeOutput = codeOutput + "\n";
 
         // Need message to not be in the loop, so splitting into two loops.
         if (!preserveMinerals) {
-            boxRoomOutput = boxRoomOutput + "# Clearing room interior\n";
+            codeOutput = codeOutput + "# Clearing room interior\n";
             for (let i = minY; i < maxY; i++) {
-                boxRoomOutput = boxRoomOutput +
+                codeOutput = codeOutput +
                     "fill " + minX + " " + i + " " + minZ + " " + maxX + " " + i + " " + maxZ + " minecraft:air\n";
             }
         } else {
-            boxRoomOutput = boxRoomOutput + "# Clearing room interior. Leaving most minerals intact. Run this \n" +
+            codeOutput = codeOutput + "# Clearing room interior. Leaving most minerals intact. Run this \n" +
                 "# function multiple times quickly to remove buggy water flows.\n";
             for (let i = minY; i < maxY; i++) {
-                boxRoomOutput = boxRoomOutput + clearRoomInterior("minecraft:water", i);
-                boxRoomOutput = boxRoomOutput + clearRoomInterior("minecraft:dirt", i);
-                boxRoomOutput = boxRoomOutput + clearRoomInterior("minecraft:gravel", i);
-                boxRoomOutput = boxRoomOutput + clearRoomInterior("minecraft:sand", i);
-                boxRoomOutput = boxRoomOutput + clearRoomInterior("minecraft:lava", i);
+                codeOutput = codeOutput + clearRoomInterior("minecraft:water", i);
+                codeOutput = codeOutput + clearRoomInterior("minecraft:dirt", i);
+                codeOutput = codeOutput + clearRoomInterior("minecraft:gravel", i);
+                codeOutput = codeOutput + clearRoomInterior("minecraft:sand", i);
+                codeOutput = codeOutput + clearRoomInterior("minecraft:lava", i);
             }
         }
 
-        document.getElementById("boxRoomOutput").value = boxRoomOutput;
+        document.getElementById("codeOutput").value = codeOutput;
     }
 }
 

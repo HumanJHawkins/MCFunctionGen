@@ -14,11 +14,11 @@ length, height, and width. Adding a shell around this would impact a 5 x 5 x 5 s
 <div class="container">
     <form name="formBoxRoom">
         <label for="centerX">Center X: </label>
-        <input type="number" name="centerX" id="centerX" value="0"><br>
+        <input type="number" name="centerX" id="centerX" value="-43"><br>
         <label for="floorY">Foot-level Y: </label>
         <input type="number" name="floorY" id="floorY" value="10"><br>
         <label for="centerZ">Center Z: </label>
-        <input type="number" name="centerZ" id="centerZ" value="0"><br>
+        <input type="number" name="centerZ" id="centerZ" value="-47"><br>
         <label for="lengthX">Length on X axis: </label>
         <input type="number" name="lengthX" id="lengthX" value="95"><br>
         <label for="heightY">Height Y: </label>
@@ -43,11 +43,14 @@ length, height, and width. Adding a shell around this would impact a 5 x 5 x 5 s
         <input type="checkbox" id="preserveMinerals" name="preserveMinerals">
 
         <br><br>
-        <label for="boxRoomOutput">Function Text: </label>
-        <textarea rows="5" cols="120" name="boxRoomOutput"
-                  id="boxRoomOutput">Your minecraft code will go here...</textarea>
+        <label for="codeOutput">Function Text: </label>
+        <textarea rows="5" cols="120" name="codeOutput"
+                  id="codeOutput">Your minecraft code will go here...</textarea>
         <br>
-        <input type="button" onclick="boxRoom()" value="Generate Code">
+
+        <input type="button" onclick="boxRoom()" value="Generate Room">
+
+        <input type="button" onclick="dwarvenStairs()" value="Dwarven Stairs">
 
     </form>
 </div>
