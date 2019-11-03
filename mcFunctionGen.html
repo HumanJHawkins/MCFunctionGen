@@ -13,12 +13,34 @@ length, height, and width. Adding a shell around this would impact a 5 x 5 x 5 s
 <br><br>
 <div class="container">
     <form name="formBoxRoom">
+        <label for="bottomLeftX">Bottom Left X: </label>
+        <input type="number" name="bottomLeftX" id="bottomLeftX" value="-48"><br>
+        <label for="bottomLeftY">Bottom Left Y Y: </label>
+        <input type="number" name="bottomLeftY" id="bottomLeftY" value="3"><br>
+        <label for="bottomLeftZ">Bottom Left Z: </label>
+        <input type="number" name="bottomLeftZ" id="bottomLeftZ" value="-48"><br>
+        <br>
+
+        <label for="topRightX">Top Right X: </label>
+        <input type="number" name="topRightX" id="topRightX" value="48"><br>
+        <label for="topRightY">Top Right Y: </label>
+        <input type="number" name="topRightY" id="topRightY" value="16"><br>
+        <label for="topRightZ">Top Right Z: </label>
+        <input type="number" name="topRightZ" id="topRightZ" value="48"><br>
+        <br>
+
+        <label for="spacing">Spacing Z: </label>
+        <input type="number" name="spacing" id="spacing" value="4"><br>
+        <br><br>
+
+
         <label for="centerX">Center X: </label>
         <input type="number" name="centerX" id="centerX" value="-43"><br>
         <label for="floorY">Foot-level Y: </label>
         <input type="number" name="floorY" id="floorY" value="10"><br>
         <label for="centerZ">Center Z: </label>
         <input type="number" name="centerZ" id="centerZ" value="-47"><br>
+        <br>
         <label for="lengthX">Length on X axis: </label>
         <input type="number" name="lengthX" id="lengthX" value="95"><br>
         <label for="heightY">Height Y: </label>
@@ -49,8 +71,8 @@ length, height, and width. Adding a shell around this would impact a 5 x 5 x 5 s
         <br>
 
         <input type="button" onclick="boxRoom()" value="Generate Room">
-
         <input type="button" onclick="dwarvenStairs()" value="Dwarven Stairs">
+        <input type="button" onclick="torchPlain()" value="Torch Plain">
 
     </form>
 </div>
