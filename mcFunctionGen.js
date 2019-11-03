@@ -46,6 +46,54 @@ function initValues() {
 
 // fill -48 9 -48 48 9 48 minecraft:stone
 
+function downShaft() {
+    // For 0,0 down to lvl 2 with ladded facing west
+    // fill -2 2 -2 2 80 2 minecraft:air replace minecraft:cave_air
+    // fill -1 16 -2 1 67 1 minecraft:glass replace minecraft:air
+    // fill -1 16 -2 1 67 1 minecraft:glass replace minecraft:water
+    // fill -1 16 -2 1 67 1 minecraft:obsidian replace minecraft:lava
+    // fill 0 2 -1 0 67 0 minecraft:air
+    //
+    // # Landing Pool
+    // fill 0 2 -2 0 15 -2 minecraft:polished_diorite
+    // fill -2 2 -2 2 2 2 minecraft:polished_diorite
+    // fill -1 2 -1 1 2 1 minecraft:water
+
+    // # Ladder
+    // setblock 0 3 -1 minecraft:ladder[facing=south]
+    // setblock 0 4 -1 minecraft:ladder[facing=south]
+    // etc...
+
+    // Doing for east right now...
+    initValues();
+    let code = '# Downshaft\n';
+    code += 'fill ' + (centerX - 2) + ' ' + (floorY - 1) + ' ' + (centerZ -1) + ' ' + (centerX + 1) + ' ' + (heightY) + ' ' + (centerZ + 1) + ' minecraft:air replace minecraft:cave_air\n';
+    code += 'fill ' + (centerX - 2) + ' ' + (floorY - 1) + ' ' + (centerZ -1) + ' ' + (centerX + 1) + ' ' + (heightY) + ' ' + (centerZ + 1) + ' minecraft:glass replace minecraft:air\n';
+    code += 'fill ' + (centerX - 2) + ' ' + (floorY - 1) + ' ' + (centerZ -1) + ' ' + (centerX + 1) + ' ' + (heightY) + ' ' + (centerZ + 1) + ' minecraft:glass replace minecraft:water\n';
+    code += 'fill ' + (centerX - 2) + ' ' + (floorY - 1) + ' ' + (centerZ -1) + ' ' + (centerX + 1) + ' ' + (heightY) + ' ' + (centerZ + 1) + ' minecraft:obsidian replace minecraft:lava\n';
+
+    code += 'fill ' + (centerX -1) + ' ' + (floorY - 0) + ' ' + (centerZ - 0) + ' ' + (centerX + 0) + ' ' + (heightY) + ' ' + (centerZ + 0) + ' minecraft:air\n';
+
+    code += '# Downshaft landing pool and room\n';
+    code += 'fill ' + (centerX -3) + ' ' + (floorY - 1) + ' ' + (centerZ - 2) + ' ' + (centerX + 1) + ' ' + (floorY + 4) + ' ' + (centerZ + 2) + ' minecraft:polished_diorite\n';
+    code += 'fill ' + (centerX -2) + ' ' + (floorY - 0) + ' ' + (centerZ - 1) + ' ' + (centerX + 0) + ' ' + (floorY + 3) + ' ' + (centerZ + 1) + ' minecraft:air\n';
+    code += 'fill ' + (centerX -2) + ' ' + (floorY - 0) + ' ' + (centerZ -1) + ' ' + (centerX + 0) + ' ' + (floorY - 0) + ' ' + (centerZ + 1) + ' minecraft:water\n';
+
+
+    code += 'setblock ' + (centerX - 2) + ' ' + (floorY + 2) + ' ' + (centerZ + 0) + ' minecraft:wall_torch[facing=east]\n';
+
+
+    // Add loop for ladders here....
+    code += '# Downshaft ladders\n';
+    for(let i = floorY; i < heightY; i++) {
+        code += 'setblock ' + (centerX - 0) + ' ' + i + ' ' + (centerZ + 0) + ' minecraft:ladder[facing=west]\n';
+    }
+
+    document.getElementById("codeOutput").value = code;
+}
+
+
+
 function torchPlain() {
     initValues();
     // alert('In torchPLain)\nNums: ' +
